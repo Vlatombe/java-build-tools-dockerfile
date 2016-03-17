@@ -189,6 +189,7 @@ RUN mkdir -p /home/jenkins/.vnc && \
     echo password | vncpasswd -f > /home/jenkins/.vnc/passwd && \
     chown -R jenkins:jenkins /home/jenkins/.vnc && \
     chmod 400 /home/jenkins/.vnc/passwd
+ENV USER jenkins
 
 USER jenkins
 
