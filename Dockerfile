@@ -55,6 +55,7 @@ RUN apt-get update -qqy \
     less nano tree \
     python python-pip groff \
     rlwrap \
+  && apt-get -qqy install tightvncserver \
   && rm -rf /var/lib/apt/lists/* \
   && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' ./usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security
 
@@ -180,6 +181,14 @@ RUN apt-get update -qqy \
   && apt-get -qqy --no-install-recommends install \
     mysql-client \
   && rm -rf /var/lib/apt/lists/*
+
+#====================================
+# VNC Server
+#====================================
+RUN mkdir -p /home/jenkins/.vnc && \
+    echo password | vncpasswd -f > /home/jenkins/.vnc/passwd && \
+    chown -R jenkins:jenkins /home/jenkins/.vnc && \
+    chmod 400 /home/jenkins/.vnc/passwd
 
 USER jenkins
 
